@@ -15,6 +15,7 @@ import com.deque.axe_core.commons.AxeWatcherOptions;
 import com.deque.axe_core.selenium.AxeWatcher;
 import com.deque.axe_core.selenium.AxeWatcherDriver;
 import com.deque.util.EnvLoader;
+import com.deque.util.GitUtils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Description;
@@ -36,10 +37,10 @@ public class WrapMethodsTest {
     @BeforeClass
     public void setUp() {
         // Generate a random branch name and switch to it
-        // String branchName = GitUtils.generateBranchName(Thread.currentThread().getStackTrace()[2].getMethodName());
-        // GitUtils.checkoutNewBranch(branchName);
+        String branchName = GitUtils.generateBranchName(Thread.currentThread().getStackTrace()[2].getMethodName());
+        GitUtils.checkoutNewBranch(branchName);
 
-        // System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "4");
+        System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "4");
 
         // Load environment variables
         String githubRunId = EnvLoader.get("GITHUB_RUN_ID");

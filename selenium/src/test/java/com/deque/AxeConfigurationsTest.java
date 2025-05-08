@@ -60,6 +60,13 @@ public class AxeConfigurationsTest {
 
         // Create different configurations for Axe Watcher
         return new Object[][] {
+            /**
+             * Test method to demonstrate the use of the disable certain rule from the scan results 
+             * Expected Results:
+             * - Branches and Commits page: Displays a new branch card, A11y threshold of 5, 1 page state, and the latest Axe Core/Watcher versions.
+             * - Issue page: Identifies failure rules such as auto-complete-valid, aria-allowed-attribute,   
+             *   label, and link-in-text-block issues. Page state: 1
+             */
             {
                 new AxeWatcherOptions()
                     .setApiKey(apiKey)
@@ -67,10 +74,16 @@ public class AxeConfigurationsTest {
                     .setBuildId(githubRunId)
                     .setRunOptions(
                         new AxeRunOptions().setRules(new HashMap<String, AxeRuleOptions>() {{
-                            put("image-alt", new AxeRuleOptions().setEnabled(false));
+                            put("color-contrast", new AxeRuleOptions().setEnabled(false));
                         }})
                     )
             },
+             /**
+             * Test method to demonstrate the use of the disable multiple rules from the scan results 
+             * Expected Results:
+             * - Branches and Commits page: Displays a new branch card, A11y threshold of 4, 1 page state, and the latest Axe Core/Watcher versions.
+             * - Issue page: Identifies failure rules such as auto-complete-valid, aria-allowed-attribute and link-in-text-block issues. Page state: 1
+             */
             {
                  new AxeWatcherOptions()
                     .setApiKey(apiKey)
@@ -78,47 +91,78 @@ public class AxeConfigurationsTest {
                     .setBuildId(githubRunId)
                     .setRunOptions(
                         new AxeRunOptions().setRules(new HashMap<String, AxeRuleOptions>() {{
-                            put("image-alt", new AxeRuleOptions().setEnabled(false));
+                            put("label", new AxeRuleOptions().setEnabled(false));
                             put("color-contrast", new AxeRuleOptions().setEnabled(false));
                         }})
                     )
             },
+            /**
+             * Test method to demonstrate the use of the scope of particular element that only can be included  from the scan results 
+             * Expected Results:
+             * - Branches and Commits page: Displays a new branch card, A11y threshold of 1, 1 page state, and the latest Axe Core/Watcher versions.
+             * - Issue page: Identifies failure rules such as color-contrast. Page state: 1
+             */
             {
                 new AxeWatcherOptions()
                     .setApiKey(apiKey)
                     .setServerUrl(serverUrl)
                     .setBuildId(githubRunId)
                     .setRunContext(
-                        new AxeRunContext().setInclude(Arrays.asList("#wcag2aa-fail"))
+                        new AxeRunContext().setInclude(Arrays.<String>asList("#wcag2aa-fail"))
                     )
             },
+             /**
+             * Test method to demonstrate the use of the scope of particular elements that only can be included  from the scan results 
+             * Expected Results:
+             * - Branches and Commits page: Displays a new branch card, A11y threshold of 2, 1 page state, and the latest Axe Core/Watcher versions.
+             * - Issue page: Identifies failure rules such as color-contrast and autocomplete-valid Page state: 1
+             */
             {
                 new AxeWatcherOptions()
                     .setApiKey(apiKey)
                     .setServerUrl(serverUrl)
                     .setBuildId(githubRunId)
                     .setRunContext(
-                        new AxeRunContext().setInclude(Arrays.asList("#wcag2aa-fail","#wcag21aa-fail"))
+                        new AxeRunContext().setInclude(Arrays.<String>asList("#wcag2aa-fail", "#wcag21aa-fail"))
                     )
             },
+             /**
+             * Test method to demonstrate the use of the scope of particular element that only can be excluded  from the scan results 
+             * Expected Results: (except color-contrast issue all the other issues can be foound)
+             * - Branches and Commits page: Displays a new branch card,  A11y threshold of 5, 1 page state, and the latest Axe Core/Watcher versions.
+             * - Issue page: Identifies failure rules such as auto-complete-valid, aria-allowed-attribute,   
+             *   label, and link-in-text-block issues. Page state: 1
+             */
             {
                 new AxeWatcherOptions()
                     .setApiKey(apiKey)
                     .setServerUrl(serverUrl)
                     .setBuildId(githubRunId)
                     .setRunContext(
-                        new AxeRunContext().setExclude(Arrays.asList("#wcag2aa"))
+                        new AxeRunContext().setExclude(Arrays.<String>asList("#wcag2aa"))
                     )
             },
+             /**
+             * Test method to demonstrate the use of the scope of particular elements that only can be excluded  from the scan results 
+             * Expected Results: (except color-contrast and autocomplete-valid issues all the other issues can be foound)
+             * - Branches and Commits page: Displays a new branch card,  A11y threshold of 4, 1 page state, and the latest Axe Core/Watcher versions.
+             * - Issue page: Identifies failure rules such as  aria-allowed-attribute, label, and link-in-text-block issues. Page state: 1
+             */
             {
                 new AxeWatcherOptions()
                     .setApiKey(apiKey)
                     .setServerUrl(serverUrl)
                     .setBuildId(githubRunId)
                     .setRunContext(
-                        new AxeRunContext().setExclude(Arrays.asList("#wcag2aa-fail","#wcag21aa-fail"))
+                        new AxeRunContext().setExclude(Arrays.<String>asList("#wcag2aa-fail", "#wcag21aa-fail"))
                     )
             },
+             /**
+             * Test method to demonstrate the use of the runoption runonly rule  from the scan results 
+             * Expected Results: (only color-contrast  issues appeared all the other issues cannot be foound)
+             * - Branches and Commits page: Displays a new branch card,  A11y threshold of 1, 1 page state, and the latest Axe Core/Watcher versions.
+             * - Issue page: Identifies failure rules such as color-contrast issues. Page state: 1
+             */
             {
                 new AxeWatcherOptions()
                     .setApiKey(apiKey)
@@ -135,6 +179,12 @@ public class AxeConfigurationsTest {
                                            .setValues(Arrays.asList("color-contrast"))))
                             
             },
+            /**
+             * Test method to demonstrate the use of the runoption runonly rules  from the scan results 
+             * Expected Results: (only color-contrast and label rule  issues only appeared all the other issues cannot be foound)
+             * - Branches and Commits page: Displays a new branch card,  A11y threshold of 2, 1 page state, and the latest Axe Core/Watcher versions.
+             * - Issue page: Identifies failure rules such as color-contrast and label issues. Page state: 1
+             */
             {
                 new AxeWatcherOptions()
                     .setApiKey(apiKey)
@@ -152,6 +202,12 @@ public class AxeConfigurationsTest {
                                            .setValues(Arrays.asList("color-contrast","label"))))
                             
             },
+            /**
+             * Test method to demonstrate the use of the runoption runonly standargs(tags)  from the scan results 
+             * Expected Results: (only wcag21aa standard  rules  issues  appeared all the other issues cannot be foound)
+             * - Branches and Commits page: Displays a new branch card,  A11y threshold of 1, 1 page state, and the latest Axe Core/Watcher versions.
+             * - Issue page: Identifies failure rules such as autocomplete-valid issues. Page state: 1
+             */
             {
                 new AxeWatcherOptions()
                     .setApiKey(apiKey)
@@ -168,6 +224,12 @@ public class AxeConfigurationsTest {
                                            .setValues(Arrays.asList("wcag21aa"))))
                             
             },
+             /**
+             * Test method to demonstrate the use of the runoption runonly multiple standargs(tags)  from the scan results 
+             * Expected Results: (only wcag21aa & wcag2aa standard  rules  issues  appeared all the other issues cannot be foound)
+             * - Branches and Commits page: Displays a new branch card,  A11y threshold of 2, 1 page state, and the latest Axe Core/Watcher versions.
+             * - Issue page: Identifies failure rules such as autocomplete-valid and color-contrast issues. Page state: 1
+             */
             {
                 new AxeWatcherOptions()
                     .setApiKey(apiKey)

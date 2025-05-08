@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="1" total="2" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2025-05-08T12:29:25 IST" name="Surefire suite" finished-at="2025-05-08T12:29:32 IST" duration-ms="7844">
+    <groups>
+    </groups>
+    <test started-at="2025-05-08T12:29:25 IST" name="Surefire test" finished-at="2025-05-08T12:29:32 IST" duration-ms="7844">
+      <class name="com.deque.AutoAnalyzeModeTestbase">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.deque.AutoAnalyzeModeTestbase@72bc6553]" started-at="2025-05-08T12:29:25 IST" name="setUp" finished-at="2025-05-08T12:29:28 IST" duration-ms="3397" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="testWithRefreshMethod()[pri:0, instance:com.deque.AutoAnalyzeModeTestbase@72bc6553]" started-at="2025-05-08T12:29:28 IST" name="testWithRefreshMethod" finished-at="2025-05-08T12:29:32 IST" duration-ms="4161" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testWithRefreshMethod -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.deque.AutoAnalyzeModeTestbase@72bc6553]" started-at="2025-05-08T12:29:32 IST" name="tearDown" finished-at="2025-05-08T12:29:32 IST" duration-ms="165" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.deque.AutoAnalyzeModeTestbase -->
+    </test> <!-- Surefire test -->
+  </suite> <!-- Surefire suite -->
+</testng-results>

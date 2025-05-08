@@ -3,13 +3,16 @@ package com.deque;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import com.deque.axe_core.commons.AxeWatcherOptions;
+import com.deque.axe_core.commons.ConfigurationOverrides;
 import com.deque.axe_core.selenium.AxeWatcher;
 import com.deque.axe_core.selenium.AxeWatcherDriver;
 import com.deque.util.EnvLoader;
-import com.deque.axe_core.commons.ConfigurationOverrides;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 /**
@@ -52,6 +55,14 @@ public class ConfigOverrideTest {
         String apiKey = EnvLoader.get("API_KEY");
         String serverUrl = EnvLoader.get("SERVER_URL");
         return new Object[][] {
+             /**
+             * This configuration overrides the axe-core version already holding with the specified override version
+             * in this case latest version to 4.8.0.
+             * Expected Results:
+             * - Branches and Commits page: Displays a new branch card, A11y threshold of 29, 1 page state, and the  Axe Core verison is 4.8.0 Watcher version should be latest.
+             * - Issue page: Identifies failure rules such as  color-contrast, image-alt, label, link-in-text-block, link-name.
+             *  Page state: 1 https://abcdcomputech.dequecloud.com
+             */
             {
                 new AxeWatcherOptions()
                     .setApiKey(apiKey)
@@ -60,6 +71,14 @@ public class ConfigOverrideTest {
                     .setConfigurationOverrides(
                            new ConfigurationOverrides().setAxeCoreVersion("4.8.0"))
               },
+             /**
+             * This configuration overrides the accessibility stantdard already holding with the specified override standard
+             * in this case it is WCAG22AAA. so that we can see the results related to wcag 2.2 AAA. if any on the test page, target-size issues
+             * Expected Results:
+             * - Branches and Commits page: Displays a new branch card, A11y threshold of 65, 1 page state, and the  Axe Core verison and Watcher version should be latest.
+             * - Issue page: Identifies failure rules such as  color-contrast, image-alt, label, link-in-text-block, link-name, target-size.
+             *  Page state: 1 https://abcdcomputech.dequecloud.com
+             */
             {
                 new AxeWatcherOptions()
                     .setApiKey(apiKey)
@@ -69,6 +88,14 @@ public class ConfigOverrideTest {
                      new ConfigurationOverrides()
                              .setAccessibilityStandard(ConfigurationOverrides.AccessibilityStandard.WCAG22AAA))
             },
+             /**
+             * This configuration overrides the experimental rules enabled/disabled already holding with the specified override enabled/diabled status
+             * in this case it is we are enabling to show the experimental issues on the page if any. If there is no experimental issues on the page results cannot be shown as swtiched status
+             * Expected Results:
+             * - Branches and Commits page: Displays a new branch card, A11y threshold of 29, 1 page state, and the  Axe Core verison and  Watcher version should be latest.
+             * - Issue page: Identifies failure rules such as  color-contrast, image-alt, label, link-in-text-block, link-name.
+             *  Page state: 1 https://abcdcomputech.dequecloud.com
+             */
             {
                 new AxeWatcherOptions()
                     .setApiKey(apiKey)
@@ -77,6 +104,14 @@ public class ConfigOverrideTest {
                     .setConfigurationOverrides(
                      new ConfigurationOverrides().setEnableExperimental(true))
             },
+              /**
+             * This configuration overrides the best-practice rules enabled/disabled already holding with the specified override enabled/diabled status
+             * in this case it is we are enabling to show the best-practice issues on the page if any. If there is no experimental issues on the page results cannot be shown as swtiched status
+             * Expected Results:
+             * - Branches and Commits page: Displays a new branch card, A11y threshold of 29 (40 issues with 11 best-practices in the issues summary table can show), 1 page state, and the  Axe Core Watcher version should be latest.
+             * - Issue page: Identifies failure rules such as  color-contrast, heading-order, image-alt, label, landmark-one-main,link-in-text-block, link-name and region.
+             *  Page state: 1 https://abcdcomputech.dequecloud.com
+             */
             {
                 new AxeWatcherOptions()
                     .setApiKey(apiKey)

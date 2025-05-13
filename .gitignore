@@ -1,0 +1,14 @@
+.env
+reports
+logs
+node_modules
+.DS_Store
+yarn.lock
+allure-report
+allure-results
+reports
+axe-watcher
+playwright-report
+test-results
+.ignore
+frameworks/selenium/target

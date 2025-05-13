@@ -148,4 +148,35 @@ public class ManualModeTest {
         ((AxeWatcherDriver) driver).axeWatcher().start();
         ((AxeWatcherDriver) driver).axeWatcher().stop();
     }
+      /**
+     * Test method to demonstrate Analyse cal in between multiple start and stop calls.
+     * Start before test page loads should start the watcher and stop after the page loads.
+     * After fist stop there is no start cal before loading the next page so it cannt be scanned with watcher
+     *  So here between start and stop one page loaded one page state can be found and with in between analyyse call will find one more page state
+     * Expected Results:
+     * - Branches and Commits page: Displays a new branch card, A11y threshold of 109, 5 page states, and the latest Axe Core/Watcher versions.
+     * - Issue page: Identifies failure rules such as  color-contrast, image-alt, label, link-in-text-block, link-name.
+     *  Page state: 5 - 1 https://abcdcomputech.dequecloud.com, 2-3 child(4) page https://abcdcomputech.dequecloud.com/cart.php, 4-5 child(3) page https://abcdcomputech.dequecloud.com/desktops.php
+     */
+    @Test
+    public void testAnalyseBetweenStartNStop() {
+        ((AxeWatcherDriver) driver).axeWatcher().start();
+        driver.get("https://abcdcomputech.dequecloud.com/"); //1 page state
+        ((AxeWatcherDriver) driver).axeWatcher().stop(); //here stops and no start before page is rendered, so this page state not scanned
+        driver.findElement(By.cssSelector("#topnav > ul > li:nth-child(5) > a")).click();
+        ((AxeWatcherDriver) driver).axeWatcher().start(); //2 page state with child(4) page
+        driver.findElement(By.cssSelector("#topnav > ul > li:nth-child(4) > a")).click();
+        ((AxeWatcherDriver) driver).axeWatcher().analyze(); //3 page state with child(4) page again with analyse() call
+      
+        ((AxeWatcherDriver) driver).axeWatcher().stop(); //here stops and no start before page is rendered, so this page state not scanned
+        driver.findElement(By.cssSelector("#topnav > ul > li:nth-child(3) > a")).click();
+        ((AxeWatcherDriver) driver).axeWatcher().start(); // start but no page rendered here so no page state here 
+        ((AxeWatcherDriver) driver).axeWatcher().analyze(); // 4 page state onchild(3) page because it opened and analyse called
+        ((AxeWatcherDriver) driver).axeWatcher().stop();//here stops and no start before page is rendered, so this page state not scanned
+        ((AxeWatcherDriver) driver).axeWatcher().start(); // start but no page rendered here so no page state here 
+        ((AxeWatcherDriver) driver).axeWatcher().analyze();// 5 page state onchild(3) page because it opened and analyse called
+        ((AxeWatcherDriver) driver).axeWatcher().stop();//here stops and no start before page is rendered, so this page state not scanned
+        ((AxeWatcherDriver) driver).axeWatcher().start();// start but no page rendered here so no page state here 
+        ((AxeWatcherDriver) driver).axeWatcher().stop(); //here stops and no start before page is rendered, so this page state not scanned
+    }
 }

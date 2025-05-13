@@ -36,12 +36,7 @@ public class WrapMethodsTest {
      */
     @BeforeClass
     public void setUp() {
-        // Generate a random branch name and switch to it
-        String branchName = GitUtils.generateBranchName(Thread.currentThread().getStackTrace()[2].getMethodName());
-        GitUtils.checkoutNewBranch(branchName);
-
-        System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", "4");
-
+       
         // Load environment variables
         String githubRunId = EnvLoader.get("GITHUB_RUN_ID");
         if (githubRunId == null) {

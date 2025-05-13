@@ -164,4 +164,36 @@ public class AutoAnalyzeModeTest {
         assert actualTitle.equals(expectedTitle) : "Expected title: " + expectedTitle + ", but got: " + actualTitle;
        
     }
+      /**
+     * Test method to demonstrate scan a dynamic page on actions finding the dom changes using Selenium WebDriver.
+     * Navigates to a URL and performs scan and flush the results to devhub. As this is dynamic page, sometime issues count may vary.
+     * Expected Results:
+     * - Branches and Commits page: Displays a new branch card, A11y threshold of 30, 7 page states, and the latest Axe Core/Watcher versions.
+     * - Issue page: Identifies failure rules such as  button-name, color-contrast, image-alt, frame-title, html-has-lang, link-in-text-block, link-name, label and select-name issues.   
+     *   Page state: 7 -https://dequeuniversity.com/demo/mars
+     */
+    @Test
+    public void marsDOMChangeTest() throws InterruptedException {
+        driver.get("https://dequeuniversity.com/demo/mars/");
+        Thread.sleep(1000);
+         // Assert the title of the page
+         String expectedTitle = "Mars Commuter: Travel to Mars for Work or Pleasure!";
+         String actualTitle = driver.getTitle();
+         assert actualTitle.equals(expectedTitle) : "Expected title: " + expectedTitle + ", but got: " + actualTitle;
+       
+        driver.findElement(By.id("widget-controls-activities-label")).click();
+        Thread.sleep(1000);
+
+        driver.findElement(By.id("widget-controls-passes-label")).click();
+        Thread.sleep(1000);
+
+        driver.findElement(By.id("widget-controls-hotels-label")).click();
+        Thread.sleep(1000);
+
+        driver.findElement(By.id("widget-controls-reservations-label")).click();
+        Thread.sleep(1000);
+
+        driver.findElement(By.cssSelector("#route-type-radio-group > span:nth-child(2) > label")).click();
+        Thread.sleep(1000);
+    }
 }
